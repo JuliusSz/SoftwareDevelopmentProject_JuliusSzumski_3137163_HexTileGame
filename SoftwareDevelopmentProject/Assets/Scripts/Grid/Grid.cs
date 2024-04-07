@@ -68,7 +68,7 @@ public class Grid : MonoBehaviour
                         break;
 
                 }
-                lastPos.x -= 3.5f;
+                lastPos.x -= 3.45f;
             }
             if(y%2 == 0) 
             {
