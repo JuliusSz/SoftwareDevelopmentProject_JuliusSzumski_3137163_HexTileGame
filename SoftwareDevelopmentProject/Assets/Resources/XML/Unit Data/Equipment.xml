@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding= "UTF-8" standalone="yes" ?>
+<Equipment>
+    <unitEquipment ID="Ar-16" Type = "Infantry" research="none">
+        <Name>Ar-16</Name>
+        <SalvoSize>3</SalvoSize>
+        <Fragmentation>1</Fragmentation>
+        <Accuracy>30</Accuracy>
+        <ArmorPenetration>10</ArmorPenetration>
+        <Damage>1</Damage>
+        <SpecialTraits>StandardWeapon</SpecialTraits>
+        <SupplyUsage>10</SupplyUsage>
+		<ProductionTime>3</ProductionTime>
+        <Range>1</Range>
+    </unitEquipment>
+
+	<unitEquipment ID="Sniper" Type = "Infantry" research="none">
+		<Name>Barret 50.cal</Name>
+		<SalvoSize>1</SalvoSize>
+		<Fragmentation>1</Fragmentation>
+		<Accuracy>100</Accuracy>
+		<ArmorPenetration>100</ArmorPenetration>
+		<Damage>5</Damage>
+		<SpecialTraits>StandardWeapon</SpecialTraits>
+		<SupplyUsage>50</SupplyUsage>
+		<ProductionTime>3</ProductionTime>
+		<Range>5</Range>
+	</unitEquipment>
+	
+	<unitEquipment ID="civilEngineering" Type = "civilEngineers" research="none">
+		<Name>Civil Build tools</Name>
+		<SalvoSize>0</SalvoSize>
+		<Fragmentation>0</Fragmentation>
+		<Accuracy>0</Accuracy>
+		<ArmorPenetration>0</ArmorPenetration>
+		<Damage>0</Damage>
+		<SpecialTraits>CivilEngineering</SpecialTraits>
+		<SupplyUsage>4000</SupplyUsage>
+		<ProductionTime>5</ProductionTime>
+		<Range>0</Range>
+	</unitEquipment>
+
+	<unitEquipment ID="trunk" Type = "logi" research="none">
+		<Name>Large Trunk</Name>
+		<OreTransport>5000</OreTransport>
+		<SupplyTransport>5000</SupplyTransport>
+		<OilTransport>5000</OilTransport>
+		<FuelTransport>5000</FuelTransport>
+		<SalvoSize>0</SalvoSize>
+		<Fragmentation>0</Fragmentation>
+		<Accuracy>0</Accuracy>
+		<ArmorPenetration>0</ArmorPenetration>
+		<Damage>0</Damage>
+		<SpecialTraits>logi</SpecialTraits>
+		<SupplyUsage>0</SupplyUsage>
+		<ProductionTime>5</ProductionTime>
+		<Range>0</Range>
+	</unitEquipment>
+</Equipment>

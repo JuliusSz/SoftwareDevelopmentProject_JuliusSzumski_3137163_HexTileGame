@@ -34,25 +34,27 @@ public class NewBehaviourScript : MonoBehaviour
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         controller.Move(move * Time.deltaTime * cameraSpeed);
 
-        if (Input.mousePosition.x >= Screen.width - screenRim)
+        if (transform.position.x + Time.deltaTime * cameraSpeed <= 0 && transform.position.x + Time.deltaTime * cameraSpeed >= -300 && transform.position.z + Time.deltaTime * cameraSpeed <= 300 && transform.position.z + Time.deltaTime * cameraSpeed >= 0)
         {
-            controller.Move(new Vector3(Time.deltaTime * cameraSpeed, 0,0));
-        }
+            if (Input.mousePosition.x >= Screen.width - screenRim)
+            {
+                controller.Move(new Vector3(Time.deltaTime * cameraSpeed, 0, 0));
+            }
 
-        if (Input.mousePosition.x <= screenRim)
-        {
-            controller.Move(new Vector3((Time.deltaTime * cameraSpeed)*-1, 0, 0));
-        }
+            if (Input.mousePosition.x <= screenRim)
+            {
+                controller.Move(new Vector3((Time.deltaTime * cameraSpeed) * -1, 0, 0));
+            }
 
-        if (Input.mousePosition.y >= Screen.height - screenRim)
-        {
-            controller.Move(new Vector3(0, 0, Time.deltaTime * cameraSpeed));
-        }
+            if (Input.mousePosition.y >= Screen.height - screenRim)
+            {
+                controller.Move(new Vector3(0, 0, Time.deltaTime * cameraSpeed));
+            }
 
-        if (Input.mousePosition.y <= screenRim)
-        {
-            controller.Move(new Vector3(0, 0, (Time.deltaTime * cameraSpeed) * -1));
+            if (Input.mousePosition.y <= screenRim)
+            {
+                controller.Move(new Vector3(0, 0, (Time.deltaTime * cameraSpeed) * -1));
+            }
         }
-
     }
 }

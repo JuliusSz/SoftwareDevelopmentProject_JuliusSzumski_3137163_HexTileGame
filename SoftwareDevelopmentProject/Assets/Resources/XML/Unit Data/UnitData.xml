@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding= "UTF-8" standalone="yes" ?>
+<Units>
+    <Unit ID = "testUnit" Type = "Infantry" research="none">
+        <Name>Militia</Name>
+        <health>10</health>
+        <Armor>20</Armor>
+        <UnitSize>1</UnitSize>
+        <Stealth>1</Stealth>
+        <Optics>5</Optics>
+        <Movement>2</Movement>
+        <Supplies>50</Supplies>
+		<trainingTime>3</trainingTime>
+		<Cost>75</Cost>
+    </Unit>
+	<Unit ID = "CivilEgineers" Type = "civilEngineers" research="none">
+		<Name>Civil Engineering Squad</Name>
+		<health>3</health>
+		<Armor>1</Armor>
+		<UnitSize>20</UnitSize>
+		<Stealth>0</Stealth>
+		<Optics>0</Optics>
+		<Movement>3</Movement>
+		<Supplies>4000</Supplies>
+		<Cost>6000</Cost>
+		<trainingTime>5</trainingTime>
+	</Unit>
+	<Unit ID = "testUnit" Type = "logi" research="none">
+		<Name>Logistics truck</Name>
+		<health>10</health>
+		<Armor>20</Armor>
+		<UnitSize>1</UnitSize>
+		<Stealth>1</Stealth>
+		<Optics>1</Optics>
+		<Movement>10</Movement>
+		<Supplies>0</Supplies>
+		<trainingTime>3</trainingTime>
+		<Cost>500</Cost>
+	</Unit>
+</Units>

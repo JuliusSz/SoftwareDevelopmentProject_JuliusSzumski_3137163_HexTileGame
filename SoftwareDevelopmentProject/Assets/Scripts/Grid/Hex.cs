@@ -10,6 +10,9 @@ public class Hex : MonoBehaviour
     {
         water,
         plains,
-        forest
+        forest,
+        ore,
+        oilLand,
+        oilWater
     }
 }

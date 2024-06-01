@@ -8,14 +8,19 @@ public class Grid : MonoBehaviour
     public GameObject HextileGround;
     public GameObject HextileWater;
     public GameObject HextileForest;
+    public GameObject HextileOre;
+    public GameObject HextileWaterOil;
+    public GameObject HextileGroundOil;
     public int size = 100;
 
     float scale = .1f;
 
-    Hex[,] map;
+    public Hex[,] map;
+    public GameObject[,] objMap;
 
     void Start()
     {
+        objMap = new GameObject[size,size];
         float[,] noisemap = new float[size, size];
         float xOffset = Random.Range(-10000f, 10000f);
         float yOffset = Random.Range(-10000f, 10000f);
@@ -35,11 +40,31 @@ public class Grid : MonoBehaviour
                 Hex hex = new Hex();
                 if(noisemap[y, x] < 0.5)
                 {
-                    hex.terain = Hex.terraintype.water;
+                    float randnr = Random.Range(0, 100);
+                    if(randnr < 2)
+                    {
+                        hex.terain = Hex.terraintype.oilWater;
+                    }
+                    else
+                    {
+                        hex.terain = Hex.terraintype.water;
+                    }
                 }
                 else if(noisemap[y, x] > 0.5 && noisemap[y, x]<0.8f)
                 {
-                    hex.terain = Hex.terraintype.plains;
+                    float randnr = Random.Range(0f, 100f);
+                    if (randnr < 6 && randnr > 1)
+                    {
+                        hex.terain = Hex.terraintype.ore;
+                    }else if (randnr <= 0.5f)
+                    {
+                        hex.terain = Hex.terraintype.oilLand;
+                    }
+                    else
+                    {
+                        hex.terain = Hex.terraintype.plains;
+                    }
+                    
                 }
                 else
                 {
@@ -55,18 +80,63 @@ public class Grid : MonoBehaviour
         {
             for (int x = 0; x < size; x++)
             {
+                GameObject current;
                 switch (map[x, y].terain)
                 {
                     case Hex.terraintype.plains:
-                        Instantiate(HextileGround, lastPos, new Quaternion());
+                        current = Instantiate(HextileGround, lastPos, new Quaternion(),this.gameObject.transform);
+                        current.GetComponent<Hex_Data>().moveCostLand = 1;
+                        current.GetComponent<Hex_Data>().moveCostWater = -1;
+                        current.GetComponent<Hex_Data>().TilePosition = new Vector2(x, y);
+                        current.GetComponent<Hex_Data>().terrainData = map[x, y];
+                        current.name = "[x:"+x+"|y:"+y+"]";
+                        objMap[x, y] = current;
                         break;
                     case Hex.terraintype.forest:
-                        Instantiate(HextileForest, lastPos, new Quaternion());
+                        current = Instantiate(HextileForest, lastPos, new Quaternion(), this.gameObject.transform);
+                        current.GetComponent<Hex_Data>().moveCostLand = 2;
+                        current.GetComponent<Hex_Data>().moveCostWater = -1;
+                        current.GetComponent<Hex_Data>().TilePosition = new Vector2(x, y);
+                        current.GetComponent<Hex_Data>().terrainData = map[x, y];
+                        current.name = "[x:" + x + "|y:" + y + "]";
+                        objMap[x, y] = current;
                         break;
                     case Hex.terraintype.water:
-                        Instantiate(HextileWater, lastPos, new Quaternion());
+                        current = Instantiate(HextileWater, lastPos, new Quaternion(), this.gameObject.transform);
+                        current.GetComponent<Hex_Data>().moveCostLand = -1;
+                        current.GetComponent<Hex_Data>().moveCostWater = 1;
+                        current.GetComponent<Hex_Data>().TilePosition = new Vector2(x, y);
+                        current.GetComponent<Hex_Data>().terrainData = map[x, y];
+                        current.name = "[x:" + x + "|y:" + y + "]";
+                        objMap[x, y] = current;
                         break;
-
+                    case Hex.terraintype.oilLand:
+                        current = Instantiate(HextileGroundOil, lastPos, new Quaternion(), this.gameObject.transform);
+                        current.GetComponent<Hex_Data>().moveCostLand = 2;
+                        current.GetComponent<Hex_Data>().moveCostWater = -1;
+                        current.GetComponent<Hex_Data>().TilePosition = new Vector2(x, y);
+                        current.GetComponent<Hex_Data>().terrainData = map[x, y];
+                        current.name = "[x:" + x + "|y:" + y + "]";
+                        objMap[x, y] = current;
+                        break;
+                    case Hex.terraintype.oilWater:
+                        current = Instantiate(HextileWaterOil, lastPos, new Quaternion(), this.gameObject.transform);
+                        current.GetComponent<Hex_Data>().moveCostLand = -1;
+                        current.GetComponent<Hex_Data>().moveCostWater = 2;
+                        current.GetComponent<Hex_Data>().TilePosition = new Vector2(x, y);
+                        current.GetComponent<Hex_Data>().terrainData = map[x, y];
+                        current.name = "[x:" + x + "|y:" + y + "]";
+                        objMap[x, y] = current;
+                        break;
+                    case Hex.terraintype.ore:
+                        current = Instantiate(HextileOre, lastPos, new Quaternion(), this.gameObject.transform);
+                        current.GetComponent<Hex_Data>().moveCostLand = 2;
+                        current.GetComponent<Hex_Data>().moveCostWater = -1;
+                        current.GetComponent<Hex_Data>().TilePosition = new Vector2(x, y);
+                        current.GetComponent<Hex_Data>().terrainData = map[x, y];
+                        current.name = "[x:" + x + "|y:" + y + "]";
+                        objMap[x, y] = current;
+                        break;
                 }
                 lastPos.x -= 3.45f;
             }

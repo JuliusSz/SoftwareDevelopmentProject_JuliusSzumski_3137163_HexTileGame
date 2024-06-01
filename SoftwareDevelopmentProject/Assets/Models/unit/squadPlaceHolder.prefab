@@ -1,0 +1,167 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8207387201547049599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3302652489508436397}
+  - component: {fileID: 2875729953725959368}
+  - component: {fileID: 2278115395458942830}
+  - component: {fileID: 1329783970058695918}
+  - component: {fileID: 7547620355777466975}
+  m_Layer: 0
+  m_Name: squadPlaceHolder
+  m_TagString: squad
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3302652489508436397
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207387201547049599}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 570.00146, y: 537.12756, z: -912.7728}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &2875729953725959368
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207387201547049599}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2278115395458942830
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207387201547049599}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1329783970058695918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207387201547049599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1aba8649245bd54b9bf462372eede52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cityPrefab: {fileID: 468257751806382187, guid: e0061a7b8ab6bee41b3c5efda5a8b074, type: 3}
+  minePrefab: {fileID: 2064273911607156267, guid: a9fb6263f7e967e4d825cacff7cad2fd, type: 3}
+  factoryPrefab: {fileID: 920709790836113681, guid: 0e77be32002282a49a6e9a8fd5cff746, type: 3}
+  oilewellPrefab: {fileID: 166590946963680964, guid: 5149134d671b4b44eae1575a18801d45, type: 3}
+  refineryPrefab: {fileID: 5687010275259411844, guid: 5478ebbd590d5cf408fe990514922662, type: 3}
+  playerManager: {fileID: 0}
+  manager: {fileID: 0}
+  squadData: {fileID: 7547620355777466975}
+  currentAction: 0
+  SelectedTile: {fileID: 0}
+  Grid: {fileID: 0}
+  currentTile: {fileID: 0}
+  openList: []
+  closedList: []
+  maxMovement: 0
+  leftMovement: 0
+  speed: 0.1
+  selectedEquipment:
+    MaxOreTransport: 0
+    MaxSupplyTransport: 0
+    MaxOilTransport: 0
+    MaxfuelTransport: 0
+    EquipmentType: 
+    name: 
+    salvoSize: 0
+    fragmentation: 0
+    accuracy: 0
+    armorPenetration: 0
+    damage: 0
+    specialTraits: 
+    supplyUsage: 0
+    range: 0
+--- !u!114 &7547620355777466975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207387201547049599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99868de1ee7cf2643b2a6fb30c12d6a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoliderModel: {fileID: 1220056956875624430, guid: 38e26f3a31ab38547a2e0f19fa7ed2c3, type: 3}
+  egineermodel: {fileID: 644687188598042686, guid: 354ebbc12f504e143a561555ad1822db, type: 3}
+  logiModel: {fileID: 0}
+  vehicleModel: {fileID: 0}
+  zombieModel: {fileID: 0}
+  doingSupplyRuns: 0
+  MaxOreTransport: 0
+  MaxSupplyTransport: 0
+  MaxOilTransport: 0
+  MaxfuelTransport: 0
+  crntOreTransport: 0
+  crntSupplyTransport: 0
+  crntOilTransport: 0
+  crntfuelTransport: 0
+  SquadBehaviour: {fileID: 1329783970058695918}
+  squadTemplate:
+    productionTime: 0
+    templateName: 
+    units: []
+    templateCost: 0
+  squadName: 
+  currentUnitState: []
+  currentEquipment: 0
+  MaxEquipment: 0
