@@ -18,7 +18,7 @@ public class Grid : MonoBehaviour
     public Hex[,] map;
     public GameObject[,] objMap;
 
-    void Start()
+    private void Awake()
     {
         objMap = new GameObject[size,size];
         float[,] noisemap = new float[size, size];

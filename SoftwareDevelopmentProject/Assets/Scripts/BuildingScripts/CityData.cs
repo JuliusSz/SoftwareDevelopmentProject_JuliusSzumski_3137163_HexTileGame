@@ -79,7 +79,7 @@ public class CityData : MonoBehaviour
                 {
                     if (tile.GetComponent<Hex_Data>().whatsOnThisTile == null && tile.GetComponent<Hex_Data>().moveCostLand > 0)
                     {
-                        GameObject temp = Instantiate(SquadPrefab, new Vector3(tile.transform.position.x, 3, tile.transform.position.z), new Quaternion());
+                        GameObject temp = Instantiate(SquadPrefab, new Vector3(tile.transform.position.x, 3, tile.transform.position.z), new Quaternion(), PlayerManager.transform);
                         temp.GetComponent<SquadData>().squadTemplate = BuildQueue.Dequeue();
                         temp.GetComponent<SquadBehaviour>().currentTile = tile;
                         PlayerManager.GetComponent<PlayerManager>().squadList.Add(temp);

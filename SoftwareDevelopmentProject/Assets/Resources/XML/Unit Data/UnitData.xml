@@ -2,7 +2,7 @@
 <Units>
     <Unit ID = "testUnit" Type = "Infantry" research="none">
         <Name>Militia</Name>
-        <health>10</health>
+        <health>5</health>
         <Armor>20</Armor>
         <UnitSize>1</UnitSize>
         <Stealth>1</Stealth>
@@ -24,16 +24,40 @@
 		<Cost>6000</Cost>
 		<trainingTime>5</trainingTime>
 	</Unit>
-	<Unit ID = "testUnit" Type = "logi" research="none">
+	<Unit ID = "Logi" Type = "logi" research="none">
 		<Name>Logistics truck</Name>
 		<health>10</health>
 		<Armor>20</Armor>
-		<UnitSize>1</UnitSize>
+		<UnitSize>5</UnitSize>
 		<Stealth>1</Stealth>
 		<Optics>1</Optics>
 		<Movement>10</Movement>
 		<Supplies>0</Supplies>
 		<trainingTime>3</trainingTime>
 		<Cost>500</Cost>
+	</Unit>
+	<Unit ID = "amphVehicle" Type = "amphTransportVehicle" research="none">
+		<Name>Assault Amphibious Vehicle</Name>
+		<health>20</health>
+		<Armor>40</Armor>
+		<UnitSize>5</UnitSize>
+		<Stealth>1</Stealth>
+		<Optics>1</Optics>
+		<Movement>5</Movement>
+		<Supplies>500</Supplies>
+		<trainingTime>3</trainingTime>
+		<Cost>700</Cost>
+	</Unit>
+	<Unit ID = "zombie" Type = "zombie" research="zombie">
+		<Name>walker</Name>
+		<health>3</health>
+		<Armor>25</Armor>
+		<UnitSize>1</UnitSize>
+		<Stealth>1</Stealth>
+		<Optics>5</Optics>
+		<Movement>1</Movement>
+		<Supplies>0</Supplies>
+		<trainingTime>1</trainingTime>
+		<Cost>0</Cost>
 	</Unit>
 </Units>

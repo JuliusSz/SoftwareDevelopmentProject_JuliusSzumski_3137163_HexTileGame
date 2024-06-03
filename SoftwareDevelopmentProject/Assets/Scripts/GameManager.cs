@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,17 +19,19 @@ public class GameManager : MonoBehaviour
     public List<GameObject> Playerlist;
     public PlayerManager currentPlayerTurn;
     public int playerIndex = 0;
+    public GameObject AlwaysOn;
+    public GameObject VictoryScreen;
 
+    public bool victory = false;
 
     // Start is called before the first frame update
     void Start()
     {
     }
-
     // Update is called once per frame
     void Update()
     {
-        if (!somethingIsChosingaTarget)
+        if (!somethingIsChosingaTarget && currentPlayerTurn.realPlayer == true)
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
@@ -78,7 +82,14 @@ public class GameManager : MonoBehaviour
                         {
                             if (SelectedTile.transform.parent.GetComponent<Hex_Data>().whatsOnThisTile.tag == "squad")
                             {
-                                SelectedTile.transform.parent.GetComponent<Hex_Data>().whatsOnThisTile.GetComponent<SquadBehaviour>().Movement(hit.collider.gameObject.transform.parent.gameObject);
+                                if (SelectedTile.transform.parent.GetComponent<Hex_Data>().whatsOnThisTile.GetComponent<SquadData>().Ambhibious == true)
+                                {
+                                    SelectedTile.transform.parent.GetComponent<Hex_Data>().whatsOnThisTile.GetComponent<SquadBehaviour>().AmphibiousMovement(hit.collider.gameObject.transform.parent.gameObject);
+                                }
+                                else if(SelectedTile.transform.parent.GetComponent<Hex_Data>().moveCostLand > 0)
+                                {
+                                    SelectedTile.transform.parent.GetComponent<Hex_Data>().whatsOnThisTile.GetComponent<SquadBehaviour>().Movement(hit.collider.gameObject.transform.parent.gameObject);
+                                }
                             }
                         }
                     }
@@ -88,6 +99,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
     public void ChangeTurn()
     {
         playerIndex++;
@@ -95,14 +111,18 @@ public class GameManager : MonoBehaviour
         {
             playerIndex = 0;
         }
-        if (Playerlist[playerIndex].GetComponent<PlayerManager>().realPlayer)
-        {
-            Playerlist[playerIndex].GetComponent<PlayerManager>().OnTurnStart();
-        }
+        Playerlist[playerIndex].GetComponent<PlayerManager>().OnTurnStart();
 
         BuildingUI.SetActive(false);
         CityUI.SetActive(false);
         SquadUI.SetActive(false);
+        if (!Playerlist[playerIndex].GetComponent<PlayerManager>().realPlayer && Playerlist[playerIndex].GetComponent<PlayerManager>().cityList.Count == 0)
+        {
+            victory = true;
+            AlwaysOn.SetActive(false);
+            VictoryScreen.SetActive(true);
+        }
+        
     }
 
 }
@@ -128,22 +148,25 @@ public class Equipment
     public int supplyUsage;
     public int range;
 
-    public Equipment(Equipment equipment)
+    public Equipment(Equipment toBeClonedEquipment)
     {
-        MaxOreTransport = equipment.MaxOreTransport;
-        MaxSupplyTransport = equipment.MaxSupplyTransport;
-        MaxOilTransport = equipment.MaxOilTransport;
-        MaxfuelTransport= equipment.MaxfuelTransport;
-        EquipmentType = equipment.EquipmentType;
-        name = equipment.name;
-        salvoSize = equipment.salvoSize;
-        fragmentation = equipment.fragmentation;
-        accuracy = equipment.accuracy;
-        armorPenetration = equipment.armorPenetration;
-        damage = equipment.damage;
-        specialTraits = equipment.specialTraits;
-        supplyUsage = equipment.supplyUsage;
-        range = equipment.range;
+        MaxOreTransport = toBeClonedEquipment.MaxOreTransport;
+        MaxSupplyTransport = toBeClonedEquipment.MaxSupplyTransport;
+        MaxOilTransport = toBeClonedEquipment.MaxOilTransport;
+        MaxfuelTransport= toBeClonedEquipment.MaxfuelTransport;
+        if(toBeClonedEquipment != null)
+        {
+            EquipmentType = toBeClonedEquipment.EquipmentType;
+        }
+        name = toBeClonedEquipment.name;
+        salvoSize = toBeClonedEquipment.salvoSize;
+        fragmentation = toBeClonedEquipment.fragmentation;
+        accuracy = toBeClonedEquipment.accuracy;
+        armorPenetration = toBeClonedEquipment.armorPenetration;
+        damage = toBeClonedEquipment.damage;
+        specialTraits = toBeClonedEquipment.specialTraits;
+        supplyUsage = toBeClonedEquipment.supplyUsage;
+        range = toBeClonedEquipment.range;
     }
     public Equipment(string Name, int SalvoSize, int Fragmentation, int Accuracy, int ArmorPenetration, int Damage, string SpecialTraits, int SupplyUsage, int Range, string equipmentType)
     {
@@ -175,7 +198,14 @@ public class Equipment
                     MaxfuelTransport = int.Parse(eqData["FuelTransport"].InnerText);
                 }
             }
-            
+
+        }
+        else
+        {
+            MaxOreTransport = 0;
+            MaxSupplyTransport = 0;
+            MaxOilTransport = 0;
+            MaxfuelTransport = 0;
         }
     }
 }
@@ -210,7 +240,11 @@ public class unit
         this.unitType = toBeClonedUnit.unitType;
         this.cost = toBeClonedUnit.cost;
         this.productionTime = toBeClonedUnit.productionTime;
-        this.equipment = new Equipment(toBeClonedUnit.equipment);
+        if(toBeClonedUnit.equipment != null) 
+        {
+            this.equipment = new Equipment(toBeClonedUnit.equipment);
+        }
+        
     }
     public unit(string unitName, int health, int armor, int unitSize, int stealth, int optics, int movement, int supplies, string unitType,int cost, int productionTime)
     {
@@ -250,4 +284,5 @@ public class UnitTemplate
         this.templateCost = templateCost;
         this.productionTime = productionTime;
     }
+    
 }

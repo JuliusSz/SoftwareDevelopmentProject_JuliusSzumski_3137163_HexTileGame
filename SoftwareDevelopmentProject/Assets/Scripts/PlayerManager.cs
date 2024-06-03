@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 
 public class PlayerManager : MonoBehaviour
 {
+    public GameObject zombieCityPrefab;
     public GameObject Squadprefab;
     public Grid map;
     public List<UnitTemplate> UnitTemplateList = new List<UnitTemplate>();
@@ -31,104 +32,121 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
- 
         TextAsset unitdataText = Resources.Load<TextAsset>("XML/Unit Data/UnitData");
         unitData.LoadXml(unitdataText.text);
         TextAsset equipmentdataText = Resources.Load<TextAsset>("XML/Unit Data/Equipment");
         equipmentData.LoadXml(equipmentdataText.text);
         OnTurnStart();
         createStartingTemplate();
-        foreach (GameObject tile in map.objMap)
+
+        if (realPlayer)
         {
-            List<GameObject> SurroundingTiles = new List<GameObject>();
-            Vector2 tilePos = tile.GetComponent<Hex_Data>().TilePosition;
-            if (tilePos.y % 2 == 0)
+            foreach (GameObject tile in map.objMap)
             {
-                if (tilePos.x + 1 < 100)
+                List<GameObject> SurroundingTiles = new List<GameObject>();
+                Vector2 tilePos = tile.GetComponent<Hex_Data>().TilePosition;
+                if (tilePos.y % 2 == 0)
                 {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x + 1, (int)tilePos.y]);
-                }
+                    if (tilePos.x + 1 < map.size)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x + 1, (int)tilePos.y]);
+                    }
 
-                if (tilePos.y + 1 < 100)
-                {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x, (int)tilePos.y + 1]);
-                }
+                    if (tilePos.y + 1 < map.size)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x, (int)tilePos.y + 1]);
+                    }
 
-                if (tilePos.x - 1 > 0 && tilePos.y + 1 < 100)
-                {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x - 1, (int)tilePos.y + 1]);
-                }
+                    if (tilePos.x - 1 > 0 && tilePos.y + 1 < map.size)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x - 1, (int)tilePos.y + 1]);
+                    }
 
-                if (tilePos.x - 1 >= 0)
-                {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x - 1, (int)tilePos.y]);
-                }
+                    if (tilePos.x - 1 >= 0)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x - 1, (int)tilePos.y]);
+                    }
 
-                if (tilePos.x - 1 >= 0 && tilePos.y - 1 >= 0)
-                {
-                     SurroundingTiles.Add(map.objMap[(int)tilePos.x - 1, (int)tilePos.y - 1]);
-                }
+                    if (tilePos.x - 1 >= 0 && tilePos.y - 1 >= 0)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x - 1, (int)tilePos.y - 1]);
+                    }
 
-                if (tilePos.y - 1 >= 0)
-                {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x, (int)tilePos.y - 1]);
+                    if (tilePos.y - 1 >= 0)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x, (int)tilePos.y - 1]);
+                    }
                 }
-            }
-            else
-            {
-                if (tilePos.x + 1 < 100)
+                else
                 {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x + 1, (int)tilePos.y]);
+                    if (tilePos.x + 1 < map.size)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x + 1, (int)tilePos.y]);
+                    }
+                    if (tilePos.x + 1 < map.size && tilePos.y + 1 < map.size)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x + 1, (int)tilePos.y + 1]);
+                    }
+                    if (tilePos.y + 1 < map.size)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x, (int)tilePos.y + 1]);
+                    }
+                    if (tilePos.x - 1 >= 0)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x - 1, (int)tilePos.y]);
+                    }
+                    if (tilePos.y - 1 >= 0)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x, (int)tilePos.y - 1]);
+                    }
+                    if (tilePos.x + 1 < map.size && tilePos.y - 1 >= 0)
+                    {
+                        SurroundingTiles.Add(map.objMap[(int)tilePos.x + 1, (int)tilePos.y - 1]);
+                    }
                 }
-                if (tilePos.x + 1 < 100 && tilePos.y + 1 < 100)
-                {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x + 1, (int)tilePos.y + 1]);
-                }
-                if (tilePos.y + 1 < 100)
-                {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x, (int)tilePos.y + 1]);
-                }
-                if (tilePos.x - 1 >= 0)
-                {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x - 1, (int)tilePos.y]);
-                }
-                if (tilePos.y - 1 >= 0)
-                {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x, (int)tilePos.y - 1]);
-                }
-                if (tilePos.x + 1 < 100 && tilePos.y - 1 >= 0)
-                {
-                    SurroundingTiles.Add(map.objMap[(int)tilePos.x + 1, (int)tilePos.y - 1]);
-                }
-            }
-            bool start = true;
+                bool start = true;
 
-            foreach(GameObject surrtile in SurroundingTiles)
-            {
-                if(surrtile.GetComponent<Hex_Data>().moveCostWater == 1 || SurroundingTiles.Count < 6)
+                foreach (GameObject surrtile in SurroundingTiles)
                 {
-                    start = false;
+                    if (surrtile.GetComponent<Hex_Data>().moveCostWater == 1 || SurroundingTiles.Count < 6 && surrtile.GetComponent<Hex_Data>().whatsOnThisTile == null)
+                    {
+                        start = false;
+                        break;
+                    }
+                }
+                if (start == true)
+                {
+                    GameObject riflePrefab = Squadprefab;
+                    GameObject engineerSquadPrefab = Squadprefab;
+                    GameObject NewEngineerSquadPrefab = Instantiate(engineerSquadPrefab, new Vector3(tile.transform.position.x, 3, tile.transform.position.z), new Quaternion(), this.transform);
+                    GameObject NewRiflePrefab = Instantiate(riflePrefab, new Vector3(SurroundingTiles[0].transform.position.x, 3, SurroundingTiles[0].transform.position.z), new Quaternion(), this.transform);
+
+                    NewEngineerSquadPrefab.GetComponent<SquadData>().squadTemplate = UnitTemplateList[1];
+                    NewRiflePrefab.GetComponent<SquadData>().squadTemplate = UnitTemplateList[0];
+                    NewEngineerSquadPrefab.GetComponent<SquadBehaviour>().currentTile = tile;
+                    NewRiflePrefab.GetComponent<SquadBehaviour>().currentTile = SurroundingTiles[0];
+                    squadList.Add(NewEngineerSquadPrefab);
+                    squadList.Add(NewRiflePrefab);
+                    Camera.main.transform.position = new Vector3(tile.transform.position.x, Camera.main.transform.position.y, tile.transform.position.z);
                     break;
                 }
             }
-            if (start == true)
+        }
+        else{
+            foreach(GameObject tile in map.objMap)
             {
-                GameObject riflePrefab = Squadprefab;
-                GameObject engineerSquadPrefab = Squadprefab;
-                GameObject NewEngineerSquadPrefab =Instantiate(engineerSquadPrefab,new Vector3(tile.transform.position.x,3, tile.transform.position.z),new Quaternion());
-                GameObject NewRiflePrefab= Instantiate(riflePrefab, new Vector3(SurroundingTiles[0].transform.position.x, 3, SurroundingTiles[0].transform.position.z), new Quaternion());
-
-                NewEngineerSquadPrefab.GetComponent<SquadData>().squadTemplate = UnitTemplateList[1];
-                NewRiflePrefab.GetComponent<SquadData>().squadTemplate = UnitTemplateList[0];
-                NewEngineerSquadPrefab.GetComponent<SquadBehaviour>().currentTile = tile;
-                NewRiflePrefab.GetComponent<SquadBehaviour>().currentTile = SurroundingTiles[0];
-                squadList.Add(NewEngineerSquadPrefab);
-                squadList.Add(NewRiflePrefab);
-                Camera.main.transform.position = new Vector3(tile.transform.position.x, Camera.main.transform.position.y, tile.transform.position.z);
-                break;
+                if (tile.GetComponent<Hex_Data>().terrainData.terain == Hex.terraintype.plains && tile.GetComponent<Hex_Data>().whatsOnThisTile == null) 
+                {
+                    float randResult = UnityEngine.Random.Range(0,100);
+                    if(randResult < 0.1) 
+                    {
+                        tile.GetComponent<Hex_Data>().whatsOnThisTile = Instantiate(zombieCityPrefab,new Vector3(tile.transform.position.x,3, tile.transform.position.z),new Quaternion(),this.transform);
+                        cityList.Add(tile.GetComponent<Hex_Data>().whatsOnThisTile);
+                        tile.GetComponent<Hex_Data>().whatsOnThisTile.GetComponent<zombieCity>().Tile = tile;
+                    }
+                }
             }
         }
-
     }
 
     // Update is called once per frame
@@ -141,7 +159,15 @@ public class PlayerManager : MonoBehaviour
         completedResearch.Clear();
         unlockedUnits.Clear();
         unlockedEquipment.Clear();
-        completedResearch.Add("none");
+        if (realPlayer)
+        {
+            completedResearch.Add("none");
+        }
+        else
+        {
+            completedResearch.Add("zombie");
+        }
+        
 
         XmlNodeList unitList = unitData.GetElementsByTagName("Unit");
         XmlNodeList equipmentList = equipmentData.GetElementsByTagName("unitEquipment");
@@ -192,11 +218,27 @@ public class PlayerManager : MonoBehaviour
             }
             foreach(GameObject squad in squadList)
             {
-                squad.GetComponent<SquadBehaviour>().OnTurnStart();
+                if (realPlayer)
+                {
+                    squad.GetComponent<SquadBehaviour>().OnTurnStart();
+                }
+                else
+                {
+                    squad.GetComponent<SquadBehaviour>().OnZombieTurnStart();
+                }
+                
             }
             foreach(GameObject city in cityList)
             {
-                city.GetComponent<CityData>().OnTurnStart();
+                if (realPlayer)
+                {
+                    city.GetComponent<CityData>().OnTurnStart();
+                }
+                else
+                {
+                    city.GetComponent<zombieCity>().OnTurnStart();
+                }
+                
             }
             foreach (GameObject mine in mineList)
             {
@@ -214,81 +256,113 @@ public class PlayerManager : MonoBehaviour
             {
                 factory.GetComponent<FactoryScript>().OnTurnStart();
             }
-
+            if(realPlayer== false && GameManager.currentPlayerTurn == this)
+            {
+                GameManager.ChangeTurn();
+            }
         }
     }
     public void createStartingTemplate()
     {
-        List<unit> rifleUnits = new List<unit>();
-        List<unit> engineerUnit = new List<unit>();
-        UnitTemplate startMilitiaTemplate;
-        UnitTemplate startEngineerTemplate;
-
-        for(int i = 0; i <20; i++)
+        if (realPlayer ==true)
         {
-            foreach(unit unlockedUnit in unlockedUnits)
+            List<unit> rifleUnits = new List<unit>();
+            List<unit> engineerUnit = new List<unit>();
+            UnitTemplate startMilitiaTemplate;
+            UnitTemplate startEngineerTemplate;
+
+            for (int i = 0; i < 20; i++)
             {
-                if(unlockedUnit.unitName == "Militia")
+                foreach (unit unlockedUnit in unlockedUnits)
                 {
-                    unit tempUnit = unlockedUnit;
-                    foreach(Equipment equipment in unlockedEquipment) 
+                    if (unlockedUnit.unitName == "Militia")
                     {
-                        if (equipment.name == "Ar-16")
+                        unit tempUnit = unlockedUnit;
+                        foreach (Equipment equipment in unlockedEquipment)
                         {
-                            tempUnit.equipment =new Equipment(equipment);
-                            rifleUnits.Add(unlockedUnit);
-                            break;
+                            if (equipment.name == "Ar-16")
+                            {
+                                tempUnit.equipment = new Equipment(equipment);
+                                rifleUnits.Add(unlockedUnit);
+                                break;
+                            }
                         }
-                    } 
-                }
-            }
-        }
-
-        foreach (unit unlockedUnit in unlockedUnits)
-        {
-            if (unlockedUnit.unitName == "Civil Engineering Squad")
-            {
-                unit tempUnit = unlockedUnit;
-                foreach (Equipment equipment in unlockedEquipment)
-                {
-                    if (equipment.name == "Civil Build tools")
-                    {
-                        tempUnit.equipment = new Equipment(equipment);
-                        engineerUnit.Add(unlockedUnit);
-                        break;
                     }
                 }
             }
-        }
-        int rifleCost = 0;
-        foreach (var unit in rifleUnits)
-        {
-            rifleCost += unit.cost;
-        }
-        int engineerCost = 0;
-        foreach (var unit in engineerUnit)
-        {
-            engineerCost += unit.cost;
-        }
-        int rifleTime = 0;
-        foreach (var unit in rifleUnits)
-        {
-            if (unit.productionTime > rifleTime)
+
+            foreach (unit unlockedUnit in unlockedUnits)
             {
-                rifleTime = unit.productionTime;
+                if (unlockedUnit.unitName == "Civil Engineering Squad")
+                {
+                    unit tempUnit = unlockedUnit;
+                    foreach (Equipment equipment in unlockedEquipment)
+                    {
+                        if (equipment.name == "Civil Build tools")
+                        {
+                            tempUnit.equipment = new Equipment(equipment);
+                            engineerUnit.Add(unlockedUnit);
+                            break;
+                        }
+                    }
+                }
             }
-        }
-        int engineerTime = 0;
-        foreach (var unit in engineerUnit)
-        {
-            if (unit.productionTime > engineerTime)
+            int rifleCost = 0;
+            foreach (var unit in rifleUnits)
             {
-                engineerTime = unit.productionTime;
+                rifleCost += unit.cost;
             }
+            int engineerCost = 0;
+            foreach (var unit in engineerUnit)
+            {
+                engineerCost += unit.cost;
+            }
+            int rifleTime = 0;
+            foreach (var unit in rifleUnits)
+            {
+                if (unit.productionTime > rifleTime)
+                {
+                    rifleTime = unit.productionTime;
+                }
+            }
+            int engineerTime = 0;
+            foreach (var unit in engineerUnit)
+            {
+                if (unit.productionTime > engineerTime)
+                {
+                    engineerTime = unit.productionTime;
+                }
+            }
+            startMilitiaTemplate = new UnitTemplate("Basic Militia", rifleUnits, rifleCost, rifleTime);
+            startEngineerTemplate = new UnitTemplate("civil Engineers", engineerUnit, engineerCost, engineerTime);
+            UnitTemplateList.Add(startMilitiaTemplate);
+            UnitTemplateList.Add(startEngineerTemplate);
         }
-        startMilitiaTemplate = new UnitTemplate("Basic Militia",rifleUnits,rifleCost,rifleTime);
-        startEngineerTemplate = new UnitTemplate("civil Engineers", engineerUnit,engineerCost,engineerTime);
-        UnitTemplateList.Add(startMilitiaTemplate);
-        UnitTemplateList.Add(startEngineerTemplate);
+        else
+        {
+            List<unit> zombies = new List<unit>();
+            for (int i = 0; i < 20; i++)
+            {
+                foreach (unit unlockedUnit in unlockedUnits)
+                {
+                    if (unlockedUnit.unitName == "walker")
+                    {
+                        unit tempUnit = unlockedUnit;
+                        foreach (Equipment equipment in unlockedEquipment)
+                        {
+                            if (equipment.name == "bite")
+                            {
+                                tempUnit.equipment = new Equipment(equipment);
+                                zombies.Add(unlockedUnit);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            UnitTemplate zombieHordeTemplate = new UnitTemplate("Zombie horde", zombies, 0, 0);
+            UnitTemplateList.Add(zombieHordeTemplate);
+        }
+        
     }
 }

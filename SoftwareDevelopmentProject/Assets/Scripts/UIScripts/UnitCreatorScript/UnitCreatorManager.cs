@@ -151,9 +151,10 @@ public class UnitCreatorManager : MonoBehaviour
                             UnitTemplate.Last<unit>().equipment = eq;
                             break;
                         }
-                    } 
+                    }
+                    break;
                 }
-                break;
+
             }
         }
         int cost = 0;

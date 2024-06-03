@@ -12,7 +12,7 @@ public class SquadData : MonoBehaviour
     public GameObject vehicleModel;
     public GameObject zombieModel;
 
-    
+    public bool Ambhibious = false;
 
     public int MaxOreTransport = 0;
     public int MaxSupplyTransport = 0;
@@ -41,10 +41,20 @@ public class SquadData : MonoBehaviour
         int lowestMovement = currentUnitState[0].movement;
         foreach (unit unit in currentUnitState)
         {
-            if (unit.movement < lowestMovement)
+            if (unit.unitType == "amphTransportVehicle"|| unit.unitType == "zombie")
+            {
+                Ambhibious = true;
+            }
+            if (unit.unitType == "transport" || unit.unitType == "amphTransportVehicle")
+            {
+                lowestMovement = unit.movement;
+                break;
+            }
+            else if (unit.movement < lowestMovement)
             {
                 lowestMovement = unit.movement;
             }
+
         }
 
         foreach (unit unit in currentUnitState)
@@ -71,7 +81,8 @@ public class SquadData : MonoBehaviour
 
         if(this.gameObject.tag == "enemySquad")
         {
-            Instantiate(zombieModel, this.transform);
+            //Instantiate(zombieModel, this.transform);
+            this.gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
         else
         {
@@ -105,6 +116,8 @@ public class SquadData : MonoBehaviour
         }
         SquadBehaviour.OnTurnStart();
     }
+
+
 
     // Update is called once per frame
     void Update()

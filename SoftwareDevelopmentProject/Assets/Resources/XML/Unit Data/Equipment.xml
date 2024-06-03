@@ -10,7 +10,7 @@
         <SpecialTraits>StandardWeapon</SpecialTraits>
         <SupplyUsage>10</SupplyUsage>
 		<ProductionTime>3</ProductionTime>
-        <Range>1</Range>
+        <Range>2</Range>
     </unitEquipment>
 
 	<unitEquipment ID="Sniper" Type = "Infantry" research="none">
@@ -55,4 +55,32 @@
 		<ProductionTime>5</ProductionTime>
 		<Range>0</Range>
 	</unitEquipment>
+	
+	<unitEquipment ID="M2Browing" Type = "amphTransportVehicle" research="none">
+		<Name>M2 Browing</Name>
+		<SalvoSize>3</SalvoSize>
+		<Fragmentation>1</Fragmentation>
+		<Accuracy>15</Accuracy>
+		<ArmorPenetration>20</ArmorPenetration>
+		<Damage>3</Damage>
+		<SpecialTraits>none</SpecialTraits>
+		<SupplyUsage>50</SupplyUsage>
+		<ProductionTime>4</ProductionTime>
+		<Range>2</Range>
+	</unitEquipment>
+
+	<unitEquipment ID="bite" Type = "zombie" research="zombie">
+		<Name>bite</Name>
+		<SalvoSize>1</SalvoSize>
+		<Fragmentation>1</Fragmentation>
+		<Accuracy>50</Accuracy>
+		<ArmorPenetration>10</ArmorPenetration>
+		<Damage>1</Damage>
+		<SpecialTraits>StandardWeapon</SpecialTraits>
+		<SupplyUsage>0</SupplyUsage>
+		<ProductionTime>0</ProductionTime>
+		<Range>1</Range>
+	</unitEquipment>
+
+
 </Equipment>
